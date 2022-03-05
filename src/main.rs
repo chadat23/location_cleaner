@@ -58,32 +58,17 @@ fn abrev_to_full() -> HashMap<String, String> {
         (String::from("wy"), String::from("wyoming")),
         //////////////////////////////////////////////////
         (String::from("dc"), String::from("washington district of columbia")),
+        (String::from("gu"), String::from("guam")),
         (String::from("vg"), String::from("british virgin islands")),
     ])
 }
 
 fn main() {
+    // removed:
+    // new york, new york
     let short_long = abrev_to_full();
-    // let mut args: Args = args();
-
-    // let read_file = match args.nth(1) {
-    //     Some(read_file) => {
-    //         read_file
-    //     },
-    //     _ => {
-    //         panic!("You didn't specify an input file!")
-    //     }
-    // };
     let read_file = "US.txt".to_string();
 
-    // let write_file = match args.nth(0) {
-    //     Some(write_file) => {
-    //         write_file
-    //     },
-    //     _ => {
-    //         panic!("You didn't specify an input file!")
-    //     }
-    // };
     let write_file = "locations.txt".to_string();
 
     let read_file = File::open(read_file).unwrap();
@@ -108,7 +93,7 @@ fn main() {
         let mut cc2 = line.next().unwrap().trim();
         let cc3 = line.next().unwrap().trim();
 
-        if feature_class == "p" {
+        if feature_class == "p" || feature_class == "a" {
 
             if cc2 == "" {
                 cc2 = cc3;
@@ -119,6 +104,7 @@ fn main() {
                     format!("{}, {}", city, state)
                 },
                 _ => {
+                    println!("couldn't find: {}, {}", city, cc2);
                     format!("{}, {}", city, cc2)
                 }
             };
