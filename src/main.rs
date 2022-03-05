@@ -115,9 +115,12 @@ fn main() {
         }
     }
     let mut writer = File::create(write_file).unwrap();
-    
-    for (k, (lat, long)) in &locations {
-        writeln!(&mut writer, "{}\t{}\t{}", k, lat, long).unwrap();
-        // println!("{}, {}, {}", k, lat, long);
+
+    let mut keys: Vec<&String> = locations.keys().collect();
+    keys.sort();
+
+    for key in keys.iter() {
+        let (lat, long) = locations.get(*key).unwrap();
+        writeln!(&mut writer, "{}\t{}\t{}", key, lat, long).unwrap();
     }
 }
